@@ -1,5 +1,6 @@
 import { Geist } from "next/font/google";
 import "./globals.css";
+import "../style/index.scss";
 
 
 const geist = Geist({
