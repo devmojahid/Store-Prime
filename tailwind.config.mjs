@@ -92,6 +92,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         white: {
           DEFAULT: '#FFFFFF', // light mode
           dark: '#362a2a',    // dark mode
@@ -245,5 +247,5 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
