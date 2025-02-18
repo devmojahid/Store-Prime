@@ -1,0 +1,11 @@
+// common
+@forward 'common/tailwind';
+@forward 'common/theme';
+@forward 'common/utils';
+
+// frontend
+
+// dashboard
+@forward 'dashboard/theme';
+@forward 'dashboard/components';
+@forward 'dashboard/sections';
