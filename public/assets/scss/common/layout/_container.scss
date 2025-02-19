@@ -1,0 +1,47 @@
+@use '../utils/breakpoints' as break;
+@use '../utils/mixins' as mix;
+@use '../utils/variables' as vars;
+@use "sass:map";
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  @each $breakpoint, $width in vars.$container-max-widths {
+    @include break.media-up($breakpoint) {
+      max-width: $width;
+    }
+  }
+}
+
+// Container variants
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.container-sm {
+  @extend .container;
+  max-width: map.get(vars.$container-max-widths, 'sm');
+}
+
+.container-md {
+  @extend .container;
+  max-width: map.get(vars.$container-max-widths, 'md');
+}
+
+.container-lg {
+  @extend .container;
+  max-width: map.get(vars.$container-max-widths, 'lg');
+}
+
+.container-xl {
+  @extend .container;
+  max-width: map.get(vars.$container-max-widths, 'xl');
+} 

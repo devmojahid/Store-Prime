@@ -1,7 +1,7 @@
-@forward 'colors';
-@forward 'mixins';
-@forward 'extends';
-@forward 'breakpoints';
-@forward 'typography';
-@forward 'variables';
+@forward 'colors' as colors-*;
+@forward 'typography' as typography-*;
+@forward 'mixins' as mixins-*;
+@forward 'extends' as extends-*;
+@forward 'breakpoints' as breakpoints-*;
+@forward 'variables' as variables-*;
 @forward 'root';

@@ -1,190 +1,332 @@
-    @use "sass:selector";
+@use "sass:selector";
+@use "sass:map";
+@use 'variables' as vars;
+@use 'colors' as colors;
 
-    @mixin tp-root($child) {
-        @at-root #{selector.unify(&, $child)} {
-            @content;
-        }
+@mixin tp-root($child) {
+    @at-root #{selector.unify(&, $child)} {
+        @content;
     }
+}
 
-    @mixin rtl{
-        [dir=rtl] & {
-          @content;
-        }
+@mixin rtl{
+    [dir=rtl] & {
+      @content;
     }
+}
 
-    @mixin dark{
-        [tp-theme=tp-theme-dark] & {
-          @content;
-        }
+@mixin dark{
+    [tp-theme=tp-theme-dark] & {
+      @content;
     }
+}
 
-    // bg color
-    @mixin bg-color($value, $opacity) {
-        background-color: rgba($color: $value, $alpha: $opacity);
-    }
+// bg color
+@mixin bg-color($value, $opacity) {
+    background-color: rgba($color: $value, $alpha: $opacity);
+}
         
 
-    // placeholder input
-    @mixin tp-placeholder {
-        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-            @content;
-        }
-        &::-moz-placeholder { /* Firefox 19+ */
-            @content;
-        }
-        &:-moz-placeholder { /* Firefox 4-18 */
-            @content;
-        }
-        &:-ms-input-placeholder { /* IE 10+  Edge*/
-            @content;
-        }
-        &::placeholder{ /* MODERN BROWSER */
-            @content;
-        }
+// placeholder input
+@mixin tp-placeholder {
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        @content;
     }
+    &::-moz-placeholder { /* Firefox 19+ */
+        @content;
+    }
+    &:-moz-placeholder { /* Firefox 4-18 */
+        @content;
+    }
+    &:-ms-input-placeholder { /* IE 10+  Edge*/
+        @content;
+    }
+    &::placeholder{ /* MODERN BROWSER */
+        @content;
+    }
+}
 
-    // gradient 
-    @mixin tp-gradient($value, $type : "linear") {
+// gradient 
+@mixin tp-gradient($value, $type : "linear") {
 
-        @if $type == linear {
-            background-image: -webkit-linear-gradient($value);
-            background-image: -moz-linear-gradient($value);
-            background-image: -ms-linear-gradient($value);
-            background-image: -o-linear-gradient($value);
-            background-image:   linear-gradient($value);
-          } @else {
-            background-image: -webkit-radial-gradient($value);
-            background-image: -moz-radial-gradient($value);
-            background-image: -ms-radial-gradient($value);
-            background-image: -o-radial-gradient($value);
-            background-image:   radial-gradient($value);
-          }
-       
-    }
-
-    // animate 
-    @mixin animation($property) {
-        -webkit-animation: $property;
-           -moz-animation: $property;
-            -ms-animation: $property;
-             -o-animation: $property;
-                animation: $property;
-    }
-
-    // filter 
-    @mixin filter($value) {
-        -webkit-filter: $value;
-        filter: $value;
-    }
-
-    // appearance for select
-    @mixin appearance($value) {
-        -webkit-appearance: $value;
-        -moz-appearance: $value;
-        -ms-appearance: $value;
-        -o-appearance: $value;
-        appearance: $value;
-    }
-    
-    // keyframes 
-    @mixin keyframes($name) {
-        @-webkit-keyframes #{$name} {
-            @content; 
-        }
-        @-moz-keyframes #{$name} {
-            @content;
-        }
-        @-ms-keyframes #{$name} {
-            @content;
-        }
-        @keyframes #{$name} {
-            @content;
-        } 
-    }
-
-    //backgroud 
-    @mixin background {
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-      
-    // transition specific
-    @mixin tp-transition($property: all, $time: .3s,  $func : ease-out, $delay : 0s) {
-        -webkit-transition: $property $time $delay $func;
-        -moz-transition: $property $time $delay $func;
-        -ms-transition: $property $time $delay $func;
-        -o-transition: $property $time $delay $func;
-        transition: $property $time $delay $func;
-    }
-      
-    // transition multiple
-    @mixin tp-transition-mul($property) {
-        -webkit-transition: $property;
-        -moz-transition: $property;
-        -ms-transition: $property;
-        -o-transition: $property;
-        transition: $property ;
-    }
-    
-    
-    // transform
-    @mixin transform($transforms) {
-        -webkit-transform: $transforms;
-        -moz-transform: $transforms;
-        -ms-transform: $transforms;
-        -o-transform: $transforms;
-        transform: $transforms;
-    }
-    
-    @mixin animation-name($name: fadeInUp, $fill : both) {    
-        animation-name: $name;
-        animation-fill-mode: $fill;
-    }
-    
-    @mixin animation-control($time: .3s , $duration : 1s) {
-        animation-delay: $time;
-        animation-duration: $duration;
-    }
-
-    // sentence case
-    @mixin sentence-case() {
-        text-transform: lowercase;
-        &:first-letter {
-            text-transform: uppercase;
-        }
-    }
-
-    // Flexbox display
-    @mixin flexbox() {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-    }
-        
-    @mixin custom-scrollbar($width: 6px, $thumb-color: rgba(128, 128, 128, 0.5), $track-color: rgba(0, 0, 0, 0.1)) {
-        // Webkit browsers
-        &::-webkit-scrollbar {
-          width: $width;
-        }
-      
-        &::-webkit-scrollbar-track {
-          background: $track-color;
-          border-radius: $width * 0.5;
-        }
-      
-        &::-webkit-scrollbar-thumb {
-          background: $thumb-color;
-          border-radius: $width * 0.5;
-          
-          &:hover {
-            background: rgba(mix(black, $thumb-color, 20%), 0.7);
-          }
-        }
-      
-        // Firefox
-        scrollbar-width: thin;
-        scrollbar-color: $thumb-color $track-color;
+    @if $type == linear {
+        background-image: -webkit-linear-gradient($value);
+        background-image: -moz-linear-gradient($value);
+        background-image: -ms-linear-gradient($value);
+        background-image: -o-linear-gradient($value);
+        background-image:   linear-gradient($value);
+      } @else {
+        background-image: -webkit-radial-gradient($value);
+        background-image: -moz-radial-gradient($value);
+        background-image: -ms-radial-gradient($value);
+        background-image: -o-radial-gradient($value);
+        background-image:   radial-gradient($value);
       }
+   
+}
+
+// animate 
+@mixin animation($property) {
+    -webkit-animation: $property;
+       -moz-animation: $property;
+        -ms-animation: $property;
+         -o-animation: $property;
+            animation: $property;
+}
+
+// filter 
+@mixin filter($value) {
+    -webkit-filter: $value;
+    filter: $value;
+}
+
+// appearance for select
+@mixin appearance($value) {
+    -webkit-appearance: $value;
+    -moz-appearance: $value;
+    -ms-appearance: $value;
+    -o-appearance: $value;
+    appearance: $value;
+}
+    
+// keyframes 
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content; 
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    } 
+}
+
+//backgroud 
+@mixin background {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+      
+// transition specific
+@mixin tp-transition($property: all, $time: .3s,  $func : ease-out, $delay : 0s) {
+    -webkit-transition: $property $time $delay $func;
+    -moz-transition: $property $time $delay $func;
+    -ms-transition: $property $time $delay $func;
+    -o-transition: $property $time $delay $func;
+    transition: $property $time $delay $func;
+}
+      
+// transition multiple
+@mixin tp-transition-mul($property) {
+    -webkit-transition: $property;
+    -moz-transition: $property;
+    -ms-transition: $property;
+    -o-transition: $property;
+    transition: $property ;
+}
+    
+    
+// transform
+@mixin transform($transforms) {
+    -webkit-transform: $transforms;
+    -moz-transform: $transforms;
+    -ms-transform: $transforms;
+    -o-transform: $transforms;
+    transform: $transforms;
+}
+    
+@mixin animation-name($name: fadeInUp, $fill : both) {    
+    animation-name: $name;
+    animation-fill-mode: $fill;
+}
+    
+@mixin animation-control($time: .3s , $duration : 1s) {
+    animation-delay: $time;
+    animation-duration: $duration;
+}
+
+// sentence case
+@mixin sentence-case() {
+    text-transform: lowercase;
+    &:first-letter {
+        text-transform: uppercase;
+    }
+}
+
+// Flexbox display
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+        
+@mixin custom-scrollbar($width: 6px, $thumb-color: rgba(128, 128, 128, 0.5), $track-color: rgba(0, 0, 0, 0.1)) {
+    // Webkit browsers
+    &::-webkit-scrollbar {
+      width: $width;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: $track-color;
+      border-radius: $width * 0.5;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: $thumb-color;
+      border-radius: $width * 0.5;
+      
+      &:hover {
+        background: rgba(mix(black, $thumb-color, 20%), 0.7);
+      }
+    }
+  
+    // Firefox
+    scrollbar-width: thin;
+    scrollbar-color: $thumb-color $track-color;
+  }
+
+// Media Breakpoint Mixins
+@mixin media-breakpoint-up($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    @media (min-width: map.get(vars.$breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    $max-width: map.get(vars.$breakpoints, $breakpoint);
+    @media (max-width: #{$max-width - 1px}) {
+      @content;
+    }
+  }
+}
+
+// Typography Mixins
+@mixin font-size($size) {
+  @if map.has-key(vars.$font-sizes, $size) {
+    font-size: map.get(vars.$font-sizes, $size);
+  }
+}
+
+// Color Mixins
+@mixin theme-color($color, $shade: null) {
+  @if $shade {
+    color: map.get(map.get(colors.$colors, $color), $shade);
+  } @else {
+    color: map.get(colors.$colors, $color);
+  }
+}
+
+@mixin theme-bg($color, $shade: null) {
+  @if $shade {
+    background-color: map.get(map.get(colors.$colors, $color), $shade);
+  } @else {
+    background-color: map.get(colors.$colors, $color);
+  }
+}
+
+// Flexbox Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Box shadow mixin
+@mixin box-shadow($color, $size: 6px) {
+  -webkit-box-shadow: 0 0 $size $color;
+  -moz-box-shadow: 0 0 $size $color;
+  box-shadow: 0 0 $size $color;
+}
+
+// Retina display mixin
+@mixin retina {
+  @media 
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi),
+  (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
+// Dropdown mixins
+@mixin dropdown-base {
+  @apply absolute z-50 bg-white rounded-lg shadow-lg border border-gray-100;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease-in-out;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+@mixin dropdown-item {
+  @apply px-4 py-2 block w-full text-left;
+  @include theme-color('gray', '700');
+  transition: all 0.2s ease;
+
+  &:hover {
+    @include theme-bg('gray', '50');
+    @include theme-color('primary');
+  }
+}
+
+// Mega menu mixins
+@mixin mega-menu-base {
+  @apply absolute left-0 w-full bg-white shadow-lg border-t border-gray-100;
+  top: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease-in-out;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+// Smooth transition mixin
+@mixin smooth-transition($properties: all, $duration: 0.2s, $timing: ease-in-out) {
+  transition-property: $properties;
+  transition-duration: $duration;
+  transition-timing-function: $timing;
+}
+
+// Interactive element states
+@mixin interactive {
+  @apply cursor-pointer select-none;
+  @include smooth-transition;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Focus ring
+@mixin focus-ring($color: 'primary', $opacity: 0.2) {
+  @apply focus:outline-none focus:ring-2;
+  ring-color: var(--#{$color});
+  ring-opacity: $opacity;
+}

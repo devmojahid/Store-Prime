@@ -1,0 +1,58 @@
+@use "sass:map";
+@use '../../common/utils/colors' as colors;
+@use '../../common/utils/variables' as vars;
+@use '../../common/utils/mixins' as mix;
+@use '../../common/utils/breakpoints' as break;
+
+.electronics {
+  &-layout {
+    @apply min-h-screen bg-gray-50;
+  }
+
+  &-container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    @each $breakpoint, $width in vars.$container-max-widths {
+      @include break.media-up($breakpoint) {
+        max-width: $width;
+      }
+    }
+  }
+
+  // Theme Colors
+  --electronics-primary: #{map.get(colors.$colors, 'primary')};
+  --electronics-secondary: #{map.get(colors.$colors, 'secondary')};
+  --electronics-text: #{map.get(map.get(colors.$colors, 'gray'), '700')};
+  --electronics-light: #{map.get(map.get(colors.$colors, 'gray'), '100')};
+  --electronics-border: #{map.get(map.get(colors.$colors, 'gray'), '200')};
+}
+
+.electronics-container {
+  @apply space-y-6 p-4;
+  .electronics-heading {
+    @apply text-xl font-semibold text-primary;
+  }
+  .electronics-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4;
+  }
+  .electronics-product {
+    @apply border p-4 rounded hover:shadow-md transition-shadow bg-white;
+    @include mix.box-shadow(rgba(0, 0, 0, 0.1));
+    img {
+      @apply w-full h-40 object-cover mb-2;
+    }
+    .product-title {
+      @apply font-semibold line-clamp-1;
+    }
+    .product-desc {
+      @apply text-sm text-gray-600 line-clamp-2;
+    }
+    .product-price {
+      @apply mt-2 font-bold;
+    }
+  }
+}

@@ -1,0 +1,270 @@
+@use '../../common/utils/colors' as colors;
+@use '../../common/utils/variables' as vars;
+@use '../../common/utils/mixins' as mix;
+@use '../../common/utils/breakpoints' as break;
+@use "sass:map";
+
+.electronics {
+  &-container {
+    @apply w-full mx-auto px-4;
+    
+    @each $breakpoint, $width in vars.$container-max-widths {
+      @include break.media-up($breakpoint) {
+        max-width: $width;
+      }
+    }
+  }
+
+  &-topbar {
+    @include mix.theme-bg('gray', '50');
+    @apply border-b border-gray-200 hidden md:block;
+    
+    &-wrapper {
+      @include mix.flex-between;
+      @apply py-2;
+    }
+
+    &-info {
+      @apply flex items-center gap-6 lg:gap-8;
+
+      &-item {
+        @include mix.flex-center;
+        @apply gap-2 text-sm text-gray-600;
+
+        svg {
+          @include mix.theme-color('primary');
+          @apply w-4 h-4;
+        }
+
+        a {
+          @apply hover:text-primary transition-colors duration-200;
+        }
+      }
+    }
+
+    &-links {
+      @apply flex items-center gap-6;
+
+      &-item {
+        @apply relative;
+
+        > a {
+          @apply text-sm text-gray-600 hover:text-primary transition-colors duration-200;
+        }
+
+        &.has-dropdown {
+          &:hover {
+            .dropdown-menu {
+              @apply opacity-100 visible;
+              transform: translateY(0);
+            }
+          }
+        }
+      }
+
+      .dropdown-menu {
+        @include mix.dropdown-base;
+        @apply mt-2 right-0 min-w-[200px] py-2;
+
+        .dropdown-item {
+          @include mix.dropdown-item;
+          @apply text-sm;
+        }
+      }
+    }
+  }
+
+  &-header {
+    @apply sticky top-0 z-50 bg-white shadow-sm;
+
+    &-main {
+      @apply py-4 border-b border-gray-100;
+
+      &-wrapper {
+        @include mix.flex-between;
+        @apply gap-4 md:gap-8;
+      }
+
+      &-logo {
+        @apply flex-shrink-0;
+        
+        img {
+          @apply h-8 md:h-10 w-auto;
+        }
+      }
+
+      &-search {
+        @apply flex-1 max-w-2xl hidden md:block;
+
+        &-form {
+          @apply relative;
+
+          input {
+            @apply w-full h-12 pl-4 pr-12 rounded-lg bg-gray-50 border border-gray-200
+                   focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
+                   transition-all duration-200;
+          }
+
+          button {
+            @apply absolute right-0 top-0 h-full px-4 text-gray-500 hover:text-primary
+                   transition-colors duration-200;
+          }
+        }
+      }
+
+      &-actions {
+        @apply flex items-center gap-4 md:gap-6;
+
+        &-item {
+          @apply relative text-gray-600 hover:text-primary transition-colors duration-200;
+
+          &-count {
+            @include mix.flex-center;
+            @apply absolute -top-2 -right-2 w-5 h-5 text-xs text-white bg-primary rounded-full;
+          }
+        }
+      }
+    }
+
+    &-nav {
+      @apply bg-white relative;
+
+      &-wrapper {
+        @apply hidden md:flex items-center justify-between py-4;
+      }
+
+      &-categories {
+        @apply relative;
+
+        &-toggle {
+          @include mix.flex-center;
+          @apply gap-2 px-6 py-3 bg-primary text-white rounded-lg font-medium;
+        }
+
+        .mega-menu {
+          @include mix.mega-menu-base;
+          @apply py-6;
+
+          &-grid {
+            @apply grid grid-cols-4 gap-8;
+          }
+
+          &-category {
+            @apply space-y-4;
+
+            &-title {
+              @apply font-semibold text-gray-900 border-b border-gray-100 pb-2;
+            }
+
+            &-list {
+              @apply space-y-2;
+
+              a {
+                @apply block text-gray-600 hover:text-primary transition-colors duration-200;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          .mega-menu {
+            @apply opacity-100 visible;
+            transform: translateY(0);
+          }
+        }
+      }
+
+      &-menu {
+        @apply flex items-center gap-8;
+
+        &-item {
+          @apply relative;
+
+          > a {
+            @apply text-gray-700 hover:text-primary transition-colors duration-200;
+          }
+
+          &.has-dropdown {
+            @apply pr-5;
+
+            &::after {
+              content: '';
+              @apply absolute right-0 top-1/2 w-1.5 h-1.5 border-r border-b border-current
+                     -translate-y-1/2 rotate-45 transition-transform duration-200;
+            }
+
+            &:hover {
+              &::after {
+                @apply rotate-[225deg];
+              }
+
+              .dropdown-menu {
+                @apply opacity-100 visible;
+                transform: translateY(0);
+              }
+            }
+          }
+
+          .dropdown-menu {
+            @include mix.dropdown-base;
+            @apply mt-2 py-2;
+          }
+        }
+      }
+
+      @include break.media-down('md') {
+        @apply fixed top-[72px] left-0 w-full h-[calc(100vh-72px)] bg-white overflow-auto;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+
+        &.active {
+          transform: translateX(0);
+        }
+
+        &-wrapper {
+          @apply block p-4;
+        }
+
+        &-menu {
+          @apply flex flex-col gap-0;
+
+          &-item {
+            @apply w-full border-b border-gray-100 last:border-none;
+
+            > a {
+              @apply block py-3;
+            }
+
+            &.has-dropdown {
+              @apply pr-0;
+
+              &::after {
+                @apply right-4 rotate-0;
+              }
+
+              &.active {
+                &::after {
+                  @apply rotate-180;
+                }
+              }
+            }
+
+            .dropdown-menu {
+              @apply static w-full mt-0 shadow-none border-t border-gray-100
+                     opacity-0 h-0 invisible;
+              transform: none;
+
+              &.active {
+                @apply opacity-100 visible h-auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-mobile-toggle {
+    @apply md:hidden text-gray-600 hover:text-primary transition-colors duration-200;
+  }
+} 

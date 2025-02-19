@@ -1,1 +1,55 @@
-$theme-prifix : 'rf';
+$theme-prifix: 'rf';
+
+// Use colors from colors module instead of redefining
+@use 'colors' as *;
+
+// Typography
+$font-family: (
+  'primary': ('Roboto', sans-serif),
+  'secondary': ('Inter', sans-serif)
+);
+
+$font-sizes: (
+  'xs': 0.75rem,    // 12px
+  'sm': 0.875rem,   // 14px
+  'base': 1rem,     // 16px
+  'lg': 1.125rem,   // 18px
+  'xl': 1.25rem,    // 20px
+  '2xl': 1.5rem,    // 24px
+  '3xl': 1.875rem,  // 30px
+  '4xl': 2.25rem    // 36px
+);
+
+// Breakpoints
+$breakpoints: (
+  '4xl': 1920px,  // Full HD
+  '3xl': 1600px,  // Large desktop
+  '2xl': 1364px,  // Small desktop/laptop
+  'xl': 1200px,   // Laptop
+  'lg': 1024px,   // Small laptop/large tablet
+  'md': 768px,    // Tablet
+  'sm': 576px,    // Large mobile
+  'xs': 375px     // Small mobile
+);
+
+// Container max widths
+$container-max-widths: (
+  '4xl': 1800px,
+  '3xl': 1520px,
+  '2xl': 1320px,
+  'xl': 1140px,
+  'lg': 960px,
+  'md': 720px,
+  'sm': 540px
+);
+
+// Z-index
+$z-index: (
+  'dropdown': 1000,
+  'sticky': 1020,
+  'fixed': 1030,
+  'modal-backdrop': 1040,
+  'modal': 1050,
+  'popover': 1060,
+  'tooltip': 1070
+);

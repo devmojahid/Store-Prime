@@ -1,23 +1,31 @@
-@use 'colors' as *;
-@use 'typography' as *;
+@use 'colors' as colors;
+@use 'typography' as typography;
+@use "sass:map";
+@use "sass:list";
 
 :root {
     /**
     @font family declaration
     */
-    @each $ff, $shades in $font-family {
-        @each $shade, $value in $shades {
-            --ms-#{$ff}-#{$shade}: #{$value};
-        }
+    @each $key, $value in typography.$font-family {
+        --ms-font-#{$key}: #{$value};
+    }
+
+    // Font sizes
+    @each $key, $value in typography.$font-sizes {
+        --ms-font-size-#{$key}: #{$value};
     }
 
     /**
     @color declaration
     */
-    @each $color, $shades in $colors {
-        @each $shade, $value in $shades {
-            --ms-#{$color}-#{$shade}: #{$value};
+    @each $key, $value in colors.$colors {
+        @if type-of($value) == 'map' {
+            @each $subkey, $subvalue in $value {
+                --ms-#{$key}-#{$subkey}: #{$subvalue};
+            }
+        } @else {
+            --ms-#{$key}: #{$value};
         }
     }
-
 }

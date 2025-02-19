@@ -1,11 +1,23 @@
-// common
+// Base
+@use 'common/utils/variables';
+@use 'common/utils/mixins';
+@use 'common/utils/breakpoints';
+
+// Layout
+@use 'common/layout/container';
+
+// Theme
+
+// Components
+@use 'frontend/components/electronics-header';
+
+// Pages
+@use 'frontend/homepage/electronics';
+
+// Common
 @forward 'common/tailwind';
-@forward 'common/theme';
 @forward 'common/utils';
 
-// frontend
-
-// dashboard
-@forward 'dashboard/theme';
-@forward 'dashboard/components';
+// Dashboard
 @forward 'dashboard/sections';
+

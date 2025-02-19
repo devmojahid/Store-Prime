@@ -1,3 +1,127 @@
+@use "sass:map";
+@use 'variables' as vars;
+
+// Screen sizes
+$screen-sizes: (
+  'desktop': (
+    'width': 1920px,
+    'height': 1080px,
+    'label': 'Full Screen Layout'
+  ),
+  'laptop': (
+    'width': 1364px,
+    'height': 768px,
+    'label': 'Laptop Screen Layout'
+  ),
+  'tablet': (
+    'width': 1024px,
+    'height': 768px,
+    'label': 'Tablet Screen Layout'
+  ),
+  'mobile': (
+    'width': 767px,
+    'height': 365px,
+    'label': 'Mobile Screen Layout'
+  )
+);
+
+// Breakpoints map
+$breakpoints: (
+  '4xl': 1920px,  // Full HD
+  '3xl': 1600px,  // Large desktop
+  '2xl': 1364px,  // Small desktop/laptop
+  'xl': 1200px,   // Laptop
+  'lg': 1024px,   // Small laptop/large tablet
+  'md': 768px,    // Tablet
+  'sm': 576px,    // Large mobile
+  'xs': 375px     // Small mobile
+);
+
+// Container max widths
+$container-max-widths: (
+  '4xl': 1800px,
+  '3xl': 1520px,
+  '2xl': 1320px,
+  'xl': 1140px,
+  'lg': 960px,
+  'md': 720px,
+  'sm': 540px
+);
+
+// Media query mixins
+@mixin media-up($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    @media (min-width: map.get(vars.$breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+@mixin media-down($breakpoint) {
+  @if map.has-key(vars.$breakpoints, $breakpoint) {
+    $max-width: map.get(vars.$breakpoints, $breakpoint);
+    @media (max-width: #{$max-width - 1px}) {
+      @content;
+    }
+  }
+}
+
+@mixin media-between($min, $max) {
+  @if map.has-key(vars.$breakpoints, $min) and map.has-key(vars.$breakpoints, $max) {
+    $min-width: map.get(vars.$breakpoints, $min);
+    $max-width: map.get(vars.$breakpoints, $max);
+    @media (min-width: #{$min-width}) and (max-width: #{$max-width - 1px}) {
+      @content;
+    }
+  }
+}
+
+// Add these aliases for compatibility
+@mixin media-breakpoint-up($breakpoint) {
+  @include media-up($breakpoint) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @include media-down($breakpoint) {
+    @content;
+  }
+}
+
+// Retina display mixin
+@mixin retina {
+  @media 
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
+// Container mixin
+@mixin make-container($padding-x: 1rem) {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: $padding-x;
+  padding-left: $padding-x;
+}
+
+// Responsive container mixin
+@mixin responsive-container {
+  @include make-container();
+
+  @each $breakpoint, $width in $container-max-widths {
+    @include media-up($breakpoint) {
+      max-width: $width;
+    }
+  }
+}
+
 // Responsive Variables
 $x4l: 'only screen and (min-width: 1700px) and (max-width: 1800px)';
 $x3l: 'only screen and (min-width: 1600px) and (max-width: 1700px)';
