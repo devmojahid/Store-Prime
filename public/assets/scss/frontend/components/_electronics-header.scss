@@ -22,18 +22,22 @@
     &-wrapper {
       @include mix.flex-between;
       @apply py-2;
+      
+      @include break.media-up('xl') {
+        @apply py-2.5;
+      }
     }
 
     &-info {
-      @apply flex items-center gap-6 lg:gap-8;
+      @apply flex items-center gap-4 md:gap-6;
 
       &-item {
         @include mix.flex-center;
-        @apply gap-2 text-sm text-gray-600;
+        @apply gap-1.5 text-sm text-gray-600;
 
         svg {
           @include mix.theme-color('primary');
-          @apply w-4 h-4;
+          @apply w-3.5 h-3.5;
         }
 
         a {
@@ -43,33 +47,10 @@
     }
 
     &-links {
-      @apply flex items-center gap-6;
+      @apply flex items-center gap-4;
 
       &-item {
-        @apply relative;
-
-        > a {
-          @apply text-sm text-gray-600 hover:text-primary transition-colors duration-200;
-        }
-
-        &.has-dropdown {
-          &:hover {
-            .dropdown-menu {
-              @apply opacity-100 visible;
-              transform: translateY(0);
-            }
-          }
-        }
-      }
-
-      .dropdown-menu {
-        @include mix.dropdown-base;
-        @apply mt-2 right-0 min-w-[200px] py-2;
-
-        .dropdown-item {
-          @include mix.dropdown-item;
-          @apply text-sm;
-        }
+        @apply text-sm text-gray-600 hover:text-primary transition-colors duration-200;
       }
     }
   }
@@ -79,184 +60,187 @@
 
     &-main {
       @apply py-4 border-b border-gray-100;
+      
+      @include break.media-up('xl') {
+        @apply py-5;
+      }
 
       &-wrapper {
         @include mix.flex-between;
-        @apply gap-4 md:gap-8;
+        @apply gap-4 md:gap-6 xl:gap-8;
       }
 
       &-logo {
         @apply flex-shrink-0;
         
         img {
-          @apply h-8 md:h-10 w-auto;
+          @apply h-8 w-auto md:h-10 xl:h-12;
         }
       }
 
       &-search {
-        @apply flex-1 max-w-2xl hidden md:block;
+        @apply flex-1 max-w-xl hidden md:block xl:max-w-2xl;
 
         &-form {
           @apply relative;
 
           input {
-            @apply w-full h-12 pl-4 pr-12 rounded-lg bg-gray-50 border border-gray-200
-                   focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
-                   transition-all duration-200;
+            @apply w-full h-11 md:h-12 xl:h-14 pl-4 pr-12 rounded-lg bg-gray-50 
+                   border border-gray-200 text-base xl:text-lg
+                   focus:outline-none focus:ring-2 focus:ring-primary/20 
+                   focus:border-primary transition-all duration-200;
           }
 
           button {
-            @apply absolute right-0 top-0 h-full px-4 text-gray-500 hover:text-primary
-                   transition-colors duration-200;
+            @apply absolute right-0 top-0 h-full px-4 text-gray-500 
+                   hover:text-primary transition-colors duration-200;
+
+            svg {
+              @apply w-5 h-5 xl:w-6 xl:h-6;
+            }
           }
         }
       }
 
       &-actions {
-        @apply flex items-center gap-4 md:gap-6;
+        @apply flex items-center gap-3 md:gap-4 xl:gap-6;
 
         &-item {
           @apply relative text-gray-600 hover:text-primary transition-colors duration-200;
 
+          svg {
+            @apply w-6 h-6 md:w-6 md:h-6;
+          }
+
           &-count {
             @include mix.flex-center;
-            @apply absolute -top-2 -right-2 w-5 h-5 text-xs text-white bg-primary rounded-full;
+            @apply absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] text-white 
+                   bg-primary rounded-full font-medium;
+          }
+
+          &-dropdown {
+            @apply absolute right-0 top-full mt-2 bg-white rounded-lg shadow-lg 
+                   border border-gray-100 invisible opacity-0 transform translate-y-2 
+                   transition-all duration-200 z-50;
+
+            &.active {
+              @apply visible opacity-100 translate-y-0;
+            }
+
+            &.cart {
+              @apply w-[320px] p-4;
+
+              &-header {
+                @apply flex items-center justify-between pb-3 border-b border-gray-100;
+                
+                h6 {
+                  @apply text-base font-medium;
+                }
+              }
+
+              &-items {
+                @apply max-h-[250px] overflow-y-auto py-3;
+                @include mix.custom-scrollbar;
+
+                &:empty {
+                  &::after {
+                    content: 'Your cart is empty';
+                    @apply block text-center text-gray-500 py-4;
+                  }
+                }
+              }
+
+              &-footer {
+                @apply pt-3 border-t border-gray-100;
+
+                .total {
+                  @apply flex items-center justify-between mb-3;
+                  
+                  span {
+                    @apply text-base font-medium;
+                  }
+                }
+
+                .buttons {
+                  @apply flex gap-3;
+
+                  a {
+                    @apply flex-1 text-center py-2 rounded-lg text-sm font-medium 
+                           transition-colors duration-200;
+
+                    &.view-cart {
+                      @apply border border-gray-200 hover:border-primary 
+                             hover:text-primary;
+                    }
+
+                    &.checkout {
+                      @apply bg-primary text-white hover:bg-primary/90;
+                    }
+                  }
+                }
+              }
+            }
+
+            &.account {
+              @apply w-[240px] py-2;
+
+              .menu-item {
+                @apply flex items-center gap-2 px-4 py-2 text-gray-600 
+                       hover:text-primary hover:bg-gray-50 transition-colors duration-200;
+
+                svg {
+                  @apply w-4 h-4;
+                }
+              }
+
+              .divider {
+                @apply my-1 border-t border-gray-100;
+              }
+            }
+          }
+
+          @media (min-width: 768px) {
+            &:hover {
+              .electronics-header-main-actions-item-dropdown {
+                @apply visible opacity-100 translate-y-0;
+              }
+            }
           }
         }
       }
     }
 
     &-nav {
-      @apply bg-white relative;
+      @apply bg-white border-b border-gray-100;
 
-      &-wrapper {
-        @apply hidden md:flex items-center justify-between py-4;
-      }
+      &-list {
+        @apply hidden md:flex items-center gap-6 xl:gap-8 py-4;
 
-      &-categories {
-        @apply relative;
-
-        &-toggle {
-          @include mix.flex-center;
-          @apply gap-2 px-6 py-3 bg-primary text-white rounded-lg font-medium;
-        }
-
-        .mega-menu {
-          @include mix.mega-menu-base;
-          @apply py-6;
-
-          &-grid {
-            @apply grid grid-cols-4 gap-8;
-          }
-
-          &-category {
-            @apply space-y-4;
-
-            &-title {
-              @apply font-semibold text-gray-900 border-b border-gray-100 pb-2;
-            }
-
-            &-list {
-              @apply space-y-2;
-
-              a {
-                @apply block text-gray-600 hover:text-primary transition-colors duration-200;
-              }
-            }
-          }
-        }
-
-        &:hover {
-          .mega-menu {
-            @apply opacity-100 visible;
-            transform: translateY(0);
-          }
-        }
-      }
-
-      &-menu {
-        @apply flex items-center gap-8;
-
-        &-item {
-          @apply relative;
-
-          > a {
-            @apply text-gray-700 hover:text-primary transition-colors duration-200;
-          }
-
-          &.has-dropdown {
-            @apply pr-5;
-
-            &::after {
-              content: '';
-              @apply absolute right-0 top-1/2 w-1.5 h-1.5 border-r border-b border-current
-                     -translate-y-1/2 rotate-45 transition-transform duration-200;
-            }
-
-            &:hover {
-              &::after {
-                @apply rotate-[225deg];
-              }
-
-              .dropdown-menu {
-                @apply opacity-100 visible;
-                transform: translateY(0);
-              }
-            }
-          }
-
-          .dropdown-menu {
-            @include mix.dropdown-base;
-            @apply mt-2 py-2;
+        li {
+          a {
+            @apply text-gray-700 hover:text-primary transition-colors duration-200 
+                   font-medium xl:text-lg;
           }
         }
       }
 
       @include break.media-down('md') {
-        @apply fixed top-[72px] left-0 w-full h-[calc(100vh-72px)] bg-white overflow-auto;
-        transform: translateX(-100%);
+        @apply fixed top-[72px] left-0 w-full h-[calc(100vh-72px)] 
+               bg-white overflow-auto transform -translate-x-full;
         transition: transform 0.3s ease-in-out;
 
         &.active {
-          transform: translateX(0);
+          @apply translate-x-0;
         }
 
-        &-wrapper {
-          @apply block p-4;
-        }
+        &-list {
+          @apply flex flex-col p-4;
 
-        &-menu {
-          @apply flex flex-col gap-0;
-
-          &-item {
-            @apply w-full border-b border-gray-100 last:border-none;
-
-            > a {
-              @apply block py-3;
-            }
-
-            &.has-dropdown {
-              @apply pr-0;
-
-              &::after {
-                @apply right-4 rotate-0;
-              }
-
-              &.active {
-                &::after {
-                  @apply rotate-180;
-                }
-              }
-            }
-
-            .dropdown-menu {
-              @apply static w-full mt-0 shadow-none border-t border-gray-100
-                     opacity-0 h-0 invisible;
-              transform: none;
-
-              &.active {
-                @apply opacity-100 visible h-auto;
-              }
+          li {
+            @apply border-b border-gray-100 last:border-none;
+            
+            a {
+              @apply block py-3 text-base font-medium;
             }
           }
         }
@@ -264,7 +248,11 @@
     }
   }
 
-  &-mobile-toggle {
+  &-mobile-menu-toggle {
     @apply md:hidden text-gray-600 hover:text-primary transition-colors duration-200;
+
+    svg {
+      @apply w-6 h-6;
+    }
   }
 } 

@@ -11,15 +11,29 @@
 
   &-container {
     width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 1rem;
     padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
 
-    @each $breakpoint, $width in vars.$container-max-widths {
-      @include break.media-up($breakpoint) {
-        max-width: $width;
-      }
+    @media (min-width: map.get(vars.$breakpoints, 'sm')) {
+      max-width: map.get(vars.$container-max-widths, 'sm');
+    }
+    
+    @media (min-width: map.get(vars.$breakpoints, 'md')) {
+      max-width: map.get(vars.$container-max-widths, 'md');
+    }
+    
+    @media (min-width: map.get(vars.$breakpoints, 'lg')) {
+      max-width: map.get(vars.$container-max-widths, 'lg');
+    }
+    
+    @media (min-width: map.get(vars.$breakpoints, 'xl')) {
+      max-width: map.get(vars.$container-max-widths, 'xl');
+    }
+    
+    @media (min-width: map.get(vars.$breakpoints, '2xl')) {
+      max-width: map.get(vars.$container-max-widths, '2xl');
     }
   }
 

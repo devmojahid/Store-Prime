@@ -244,6 +244,10 @@ module.exports = {
         gradientPrimary: "linear-gradient(90deg, #6C5FFC 0%, #003cff 100%)", //gradient1
         gradientSecondary: "linear-gradient(90deg, #FF6339 0%, #FF2259 100%)", //gradient2
       },
+      width: {
+        '280': '280px',
+        '320': '320px',
+      },
     },
   },
   variants: {},

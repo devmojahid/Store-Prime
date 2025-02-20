@@ -167,30 +167,29 @@
     display: flex;
 }
         
-@mixin custom-scrollbar($width: 6px, $thumb-color: rgba(128, 128, 128, 0.5), $track-color: rgba(0, 0, 0, 0.1)) {
-    // Webkit browsers
+@mixin custom-scrollbar($width: 6px, $thumb-color: rgba(0, 0, 0, 0.2), $track-color: rgba(0, 0, 0, 0.05)) {
     &::-webkit-scrollbar {
-      width: $width;
+        width: $width;
     }
-  
+
     &::-webkit-scrollbar-track {
-      background: $track-color;
-      border-radius: $width * 0.5;
+        background: $track-color;
+        border-radius: $width / 2;
     }
-  
+
     &::-webkit-scrollbar-thumb {
-      background: $thumb-color;
-      border-radius: $width * 0.5;
-      
-      &:hover {
-        background: rgba(mix(black, $thumb-color, 20%), 0.7);
-      }
+        background: $thumb-color;
+        border-radius: $width / 2;
+        
+        &:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
     }
-  
+
     // Firefox
     scrollbar-width: thin;
     scrollbar-color: $thumb-color $track-color;
-  }
+}
 
 // Media Breakpoint Mixins
 @mixin media-breakpoint-up($breakpoint) {
